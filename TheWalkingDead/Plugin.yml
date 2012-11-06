@@ -1,0 +1,21 @@
+name: TheWalkingDead
+main: com.orqwith.mc.TheWalkingDead
+version: 0.1
+commands:
+  twd.spawnHorde:
+    description: Spawns a horde of zombies, either at the corrent location or at the target indicated.
+    usage: /twd.spawnHorde [amount]  /tw.spawnHorde [target] 
+    permission: TheWalkingDead.spawnHorde
+    permission-message: You don't have <permission>
+
+parameters:
+  maxHordeSize: 10
+
+permission:
+  twd.*:
+    description: Gives access to all exp commands
+    children:
+      twd.spawnHorde: true
+  twd.spawnHorde:
+    description: Allows a user to spawn hordes
+    default: op
