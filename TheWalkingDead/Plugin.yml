@@ -10,6 +10,7 @@ commands:
 
 parameters:
   maxHordeSize: 10
+  spawnChance: 50
 
 permission:
   twd.*:
