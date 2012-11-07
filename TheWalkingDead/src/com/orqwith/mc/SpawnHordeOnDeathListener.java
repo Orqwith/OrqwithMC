@@ -6,11 +6,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-public class PlayerDeathListener implements Listener {
+public class SpawnHordeOnDeathListener implements Listener {
 	
 	TheWalkingDead plugin;
 	
-	public PlayerDeathListener(TheWalkingDead plugin)
+	public SpawnHordeOnDeathListener(TheWalkingDead plugin)
 	{
 		this.plugin = plugin;
 	}

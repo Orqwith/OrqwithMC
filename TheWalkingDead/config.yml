@@ -1,0 +1,3 @@
+parameters:
+  maxHordeSize: 10
+  spawnChance: 50

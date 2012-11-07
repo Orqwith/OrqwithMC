@@ -13,7 +13,7 @@ public final class TheWalkingDead extends JavaPlugin{
 	{
 		getLogger().info("Enabling TheWalkingDead addon");		
 		getCommand("twd.spawnHorde").setExecutor(new TheWalkingDeadCommandExecutor(this));
-		getServer().getPluginManager().registerEvents(new PlayerDeathListener(this), this);
+		getServer().getPluginManager().registerEvents(new SpawnHordeOnDeathListener(this), this);
 		
 		scheduleZombieHorde();
 
@@ -36,7 +36,12 @@ public final class TheWalkingDead extends JavaPlugin{
 				   Random rand = new Random();
 				   
 			       spawnChance = getConfig().getInt("parameters.spawnChance");
-			       int rollSpawn = rand.nextInt(spawnChance);
+			       
+			       System.out.println("TWD Spawn Chance: " + spawnChance + "%");
+			       
+			       int rollSpawn = rand.nextInt(100/spawnChance);
+			       
+			       System.out.println("Rolled: " + rollSpawn);
 			       
 			       if(rollSpawn == 0)
 			       {
