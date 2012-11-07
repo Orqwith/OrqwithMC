@@ -67,11 +67,11 @@ public final class TheWalkingDead extends JavaPlugin{
 	{
 		Random rand = new Random();		
 
-		System.out.println("TWD Spawn Chance: " + spawnChance + "%");
+		server.getLogger().info("TWD Spawn Chance: " + spawnChance + "%");
 
 		int rollSpawn = rand.nextInt(100) + 1;
 
-		System.out.printf("SpawnChance: %s, Rolled: %s\n", spawnChance, rollSpawn);
+		server.getLogger().info(String.format("SpawnChance: %s, Rolled: %s\n", spawnChance, rollSpawn));
 
 		if(rollSpawn <= spawnChance)
 		{
@@ -82,7 +82,7 @@ public final class TheWalkingDead extends JavaPlugin{
 
 				Player target = players.get(0);
 
-				System.out.println("Our victim: " + target.getName());
+				server.getLogger().info("Our victim: " + target.getName());
 
 				target.sendMessage("Something putrid assails your nostrils...");
 				
