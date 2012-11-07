@@ -1,4 +1,4 @@
-package com.orqwith.mc;
+package com.orqwith.mc.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -6,6 +6,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+
+import com.orqwith.mc.TheWalkingDead;
 
 public class SpawnHordeListener implements Listener {
 

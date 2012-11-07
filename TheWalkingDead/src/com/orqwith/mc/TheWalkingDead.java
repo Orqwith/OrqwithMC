@@ -9,10 +9,16 @@ import java.util.Random;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.World;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
+
+import com.orqwith.mc.commandexecutor.TheWalkingDeadCommandExecutor;
+import com.orqwith.mc.entity.TheWalkingDeadZombie;
+import com.orqwith.mc.listener.SpawnHordeListener;
+import com.orqwith.mc.listener.ZombieListener;
 
 public final class TheWalkingDead extends JavaPlugin{
 	
@@ -98,7 +104,9 @@ public final class TheWalkingDead extends JavaPlugin{
 		
 		for(int i = 0; i < hordeSize; i++)
 		{
-			world.spawn(getRandomNearbyLocation(location, 5, 10).toLocation(world), Zombie.class);
+			LivingEntity spawnedZombie = world.spawn(getRandomNearbyLocation(location, 5, 10).toLocation(world), Zombie.class);
+			TheWalkingDeadZombie zombie = new TheWalkingDeadZombie(spawnedZombie);
+			
 		}
 	}
 	
