@@ -11,5 +11,6 @@ public class PlayerDeathListener implements Listener {
 	public void onPlayDeath(PlayerDeathEvent event)
 	{
 		event.setKeepLevel(true);
+		event.setDroppedExp(0);
 	}
 }
