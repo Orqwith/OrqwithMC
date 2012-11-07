@@ -5,7 +5,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-public class PlayerDeathListener implements Listener {
+public class DisableExperienceLossListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayDeath(PlayerDeathEvent event)

@@ -7,7 +7,7 @@ public class DisableExperienceLoss extends JavaPlugin
 	@Override
 	public void onEnable()
 	{
-		getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
+		getServer().getPluginManager().registerEvents(new DisableExperienceLossListener(), this);
 	}
 	
 	@Override
