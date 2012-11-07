@@ -17,12 +17,13 @@ import org.bukkit.util.Vector;
 
 import com.orqwith.mc.commandexecutor.TheWalkingDeadCommandExecutor;
 import com.orqwith.mc.entity.TheWalkingDeadZombie;
+import com.orqwith.mc.entity.manager.ZombieManager;
 import com.orqwith.mc.listener.SpawnHordeListener;
 import com.orqwith.mc.listener.ZombieListener;
 
 public final class TheWalkingDead extends JavaPlugin{
 	
-	public TheWalkingDeadConfig config;
+	public static TheWalkingDeadConfig config;
 	
 	@Override
 	public void onEnable() 
@@ -92,21 +93,21 @@ public final class TheWalkingDead extends JavaPlugin{
 
 				target.sendMessage("Something putrid assails your nostrils...");
 				
-				spawnHorde(server, target.getLocation(), maxHordeSize);
+				spawnHorde(server, target.getLocation());
 			}
 
 		}
 	}
 	
-	public static void spawnHorde(Server server, Location location, int hordeSize)
+	public static void spawnHorde(Server server, Location location)
 	{
 		World world = server.getWorld("world");
 		
-		for(int i = 0; i < hordeSize; i++)
+		for(int i = 0; i < config.hordeSize; i++)
 		{
 			LivingEntity spawnedZombie = world.spawn(getRandomNearbyLocation(location, 5, 10).toLocation(world), Zombie.class);
-			TheWalkingDeadZombie zombie = new TheWalkingDeadZombie(spawnedZombie);
-			
+			TheWalkingDeadZombie zombie = new TheWalkingDeadZombie(spawnedZombie, config);
+			ZombieManager.addZombie(zombie);
 		}
 	}
 	

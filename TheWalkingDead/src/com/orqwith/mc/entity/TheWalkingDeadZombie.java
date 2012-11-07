@@ -6,13 +6,15 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.orqwith.mc.TheWalkingDeadConfig;
+
 public class TheWalkingDeadZombie {
 	private int health;
 	private LivingEntity livingEntity;
 	
-	public TheWalkingDeadZombie(LivingEntity livingEntity) {
+	public TheWalkingDeadZombie(LivingEntity livingEntity, TheWalkingDeadConfig config) {
 		this.setLivingEntity(livingEntity);
-		health = (int) (livingEntity.getMaxHealth() * 2);
+		health = config.getZombieHealth();
 	}
 	
 	public int getHealth() {

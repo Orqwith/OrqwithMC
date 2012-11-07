@@ -36,7 +36,7 @@ public class TheWalkingDeadCommandExecutor implements CommandExecutor {
 			if ((sender instanceof Player)) {
 				// spawn a horde at current location
 				Player player = (Player) sender;
-				TheWalkingDead.spawnHorde(server, player.getLocation(), config.getHordeSize());
+				TheWalkingDead.spawnHorde(server, player.getLocation());
 				return true;
 			} else {
 				sender.sendMessage("This command can only be run by a player.");
@@ -48,7 +48,7 @@ public class TheWalkingDeadCommandExecutor implements CommandExecutor {
 	        	sender.sendMessage(args[0] + " is not online!");
 	            return false;
 	        } else {
-	        	TheWalkingDead.spawnHorde(server, target.getLocation(), config.getHordeSize());
+	        	TheWalkingDead.spawnHorde(server, target.getLocation());
 	        	return true;
 	        }
 		} else {

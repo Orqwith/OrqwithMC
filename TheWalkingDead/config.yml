@@ -6,3 +6,4 @@ zombies:
   spawnChance: 50
   spawnInterval: 60
   blockBreakSpawnInterval: 15
+  health: 50

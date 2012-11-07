@@ -25,18 +25,18 @@ public class SpawnHordeListener implements Listener {
 		Player player = event.getEntity();
 		String deathMessage = String.format("%s has died. A horde of zombies has been attracted to their corpse...", player.getName());
 		event.setDeathMessage(deathMessage);
-		TheWalkingDead.spawnHorde(plugin.getServer(), player.getLocation(), plugin.config.getHordeSize());
+		TheWalkingDead.spawnHorde(plugin.getServer(), player.getLocation());
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreakEvent(BlockBreakEvent event)
 	{
-		int blockBreakSpawnInterval = plugin.config.getBlockBreakSpawnInterval();
+		int blockBreakSpawnInterval = TheWalkingDead.config.getBlockBreakSpawnInterval();
 		blocksBroken++;
 		if(blocksBroken%blockBreakSpawnInterval == 0)
 		{
-			int hordeSize = plugin.config.getHordeSize();
-			int spawnChance = plugin.config.getSpawnChance();
+			int hordeSize = TheWalkingDead.config.getHordeSize();
+			int spawnChance = TheWalkingDead.config.getSpawnChance();
 			TheWalkingDead.randomHordeSpawn(plugin.getServer(), hordeSize, spawnChance);
 		}
 	}
