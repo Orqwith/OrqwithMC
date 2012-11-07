@@ -10,30 +10,28 @@ public class TheWalkingDeadCommandExecutor implements CommandExecutor {
 	private Server server;
 	private TheWalkingDeadConfig config;
 
-	public TheWalkingDeadCommandExecutor(Server server, TheWalkingDeadConfig config)
-	{
+	public TheWalkingDeadCommandExecutor(Server server,
+			TheWalkingDeadConfig config) {
 		this.server = server;
 		this.config = config;
 	}
 
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) 
-	{
-		if(cmd.getName().equalsIgnoreCase("twd.spawnHorde"))
-		{
+	public boolean onCommand(CommandSender sender, Command cmd, String label,
+			String[] args) {
+		if (cmd.getName().equalsIgnoreCase("twd.spawnHorde")) {
 			return this.spawnHordeCommand(sender, cmd, label, args);
 		}
-
 		return false;
 	}
-	
-	public boolean spawnHordeCommand(CommandSender sender, Command cmd, String label, String[] args)
-	{		
-		if(args.length == 0)
-		{
+
+	public boolean spawnHordeCommand(CommandSender sender, Command cmd,
+			String label, String[] args) {
+		if (args.length == 0) {
 			if ((sender instanceof Player)) {
 				// spawn a horde at current location
 				Player player = (Player) sender;
-				TheWalkingDead.spawnHorde(server, player.getLocation(), config.getHordeSize());
+				TheWalkingDead.spawnHorde(server, player.getLocation(),
+						config.getHordeSize());
 				return true;
 			} else {
 				sender.sendMessage("This command can only be run by a player.");
@@ -41,21 +39,18 @@ public class TheWalkingDeadCommandExecutor implements CommandExecutor {
 			}
 		} else if (args.length == 1) {
 			Player target = (server.getPlayer(args[0]));
-	        if (target == null) {
-	        	sender.sendMessage(args[0] + " is not online!");
-	            return false;
-	        } else {
-	        	TheWalkingDead.spawnHorde(server, target.getLocation(), config.getHordeSize());
-	        	return true;
-	        }
+			if (target == null) {
+				sender.sendMessage(args[0] + " is not online!");
+				return false;
+			} else {
+				TheWalkingDead.spawnHorde(server, target.getLocation(),
+						config.getHordeSize());
+				return true;
+			}
 		} else {
 			sender.sendMessage("Too many parms passed.");
-            return false;
+			return false;
 		}
 	}
-	
 
-
-	
-	
 }
