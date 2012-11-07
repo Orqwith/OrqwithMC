@@ -25,7 +25,7 @@ public class SpawnHordeListener implements Listener {
 				.format("%s has died. A horde of zombies has been attracted to their corpse...",
 						player.getName());
 		event.setDeathMessage(deathMessage);
-		hordeSpawner.spawnNearPlayer(player);
+		hordeSpawner.spawnNear(player);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -34,10 +34,9 @@ public class SpawnHordeListener implements Listener {
 				.getBlockBreakSpawnInterval();
 		blocksBroken++;
 		if (blocksBroken % blockBreakSpawnInterval == 0) {
-			int hordeSize = plugin.config.getHordeSize();
-			int spawnChance = plugin.config.getSpawnChance();
 			if (hordeSpawner.rollToSpawn())
-				hordeSpawner.spawnNearPlayer(hordeSpawner.getTargetPlayer());
+				hordeSpawner.spawnNear(Utilities.getRandomPlayer(plugin
+						.getServer()));
 		}
 	}
 

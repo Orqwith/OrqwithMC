@@ -8,13 +8,11 @@ import org.bukkit.entity.Player;
 
 public class TheWalkingDeadCommandExecutor implements CommandExecutor {
 	private Server server;
-	private TheWalkingDeadConfig config;
 	private HordeSpawner hordeSpawner;
 
 	public TheWalkingDeadCommandExecutor(Server server,
-			TheWalkingDeadConfig config, HordeSpawner hordeSpawner) {
+			HordeSpawner hordeSpawner) {
 		this.server = server;
-		this.config = config;
 		this.hordeSpawner = hordeSpawner;
 	}
 
@@ -32,7 +30,7 @@ public class TheWalkingDeadCommandExecutor implements CommandExecutor {
 			if ((sender instanceof Player)) {
 				// spawn a horde at current location
 				Player player = (Player) sender;
-				hordeSpawner.spawnNearPlayer(player);
+				hordeSpawner.spawnNear(player);
 				return true;
 			} else {
 				sender.sendMessage("This command can only be run by a player.");
@@ -44,7 +42,7 @@ public class TheWalkingDeadCommandExecutor implements CommandExecutor {
 				sender.sendMessage(args[0] + " is not online!");
 				return false;
 			} else {
-				hordeSpawner.spawnNearPlayer(target);
+				hordeSpawner.spawnNear(target);
 				return true;
 			}
 		} else {
