@@ -2,6 +2,7 @@ parameters:
  
 zombies:
   immuneToDaylight: true
-  maxHordeSize: 10
+  hordeSize: 10
   spawnChance: 50
-  spawnIntervalInSeconds: 60
+  spawnInterval: 60
+  blockBreakSpawnInterval: 15

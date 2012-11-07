@@ -6,12 +6,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import org.bukkit.Location;
+import org.bukkit.Server;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
 
 public final class TheWalkingDead extends JavaPlugin{
-
-	private int spawnChance = 25;
+	
+	public TheWalkingDeadConfig config;
 	
 	@Override
 	public void onEnable() 
@@ -22,24 +27,13 @@ public final class TheWalkingDead extends JavaPlugin{
 		getConfig().options().copyDefaults(true);
 		saveConfig();
 		
-		int maxHordeSize = getMaxHordeSize();
+		config = new TheWalkingDeadConfig(this);
 			
-		getCommand("twd.spawnHorde").setExecutor(new TheWalkingDeadCommandExecutor(maxHordeSize, getServer()));
-		getServer().getPluginManager().registerEvents(new SpawnHordeOnDeathListener(this), this);
+		getCommand("twd.spawnHorde").setExecutor(new TheWalkingDeadCommandExecutor(getServer(), config));
+		getServer().getPluginManager().registerEvents(new SpawnHordeListener(this), this);
 		getServer().getPluginManager().registerEvents(new ZombieListener(this), this);
 		
-		scheduleZombieHorde();
-
-	}
-	
-	public int getMaxHordeSize()
-	{
-		return getConfig().getInt("zombies.maxHordeSize");
-	}
-	
-	public long getSpawnInterval()
-	{
-		return getConfig().getLong("zombies.spawnIntervalInSeconds")*20;
+		scheduleZombieHorde(config);
 	}
 	
 	@Override
@@ -49,43 +43,73 @@ public final class TheWalkingDead extends JavaPlugin{
 	}
 	
 	/**
-	 * Every minute, randomly spawn a horde of zombies
-	 */
-	public void scheduleZombieHorde()
+	* Every minute, randomly spawn a horde of zombies
+	*/
+	public void scheduleZombieHorde(TheWalkingDeadConfig configFile)
 	{
 		
-		int taskID = getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
-			   public void run() {
-			       //TODO roll against a percentage defined in the config to see if a horde should spawn.
-				   Random rand = new Random();
-				   int maxHordeSize = getMaxHordeSize();
-				   
-			       spawnChance = getConfig().getInt("zombies.spawnChance");
-			       
-			       System.out.println("TWD Spawn Chance: " + spawnChance + "%");
-			       
-			       int rollSpawn = rand.nextInt(100/spawnChance);
-			       
-			       System.out.println("Rolled: " + rollSpawn);
-			       
-			       if(rollSpawn == 0)
-			       {
-			    	   //TODO if a horde should spawn, randomly pick a target victim and spawn a horde)
-			    	   List<Player> players = Arrays.asList(getServer().getOnlinePlayers());
-			    	   if(players.size() > 0)
-			    	   {
-			    		   Collections.shuffle(players);
-			    	   
-			    		   Player target = players.get(0);
-			    	   
-			    		   System.out.println("Our victim: " + target.getName());
-			    	   
-			    		   new TheWalkingDeadCommandExecutor(maxHordeSize, getServer()).spawnHorde(target.getLocation());
-			    	   }
-			    	   
-			       }
-			   }
-			}, 60L, getSpawnInterval());
+		int taskID = getServer().getScheduler().scheduleSyncRepeatingTask(this, new RunnableHordeSpawner(configFile), 60L, configFile.getSpawnInterval());
 		getLogger().info("Scheduling random zombie horde spawner as taskID: " + taskID);
+	}
+	
+	class RunnableHordeSpawner implements Runnable {
+        TheWalkingDeadConfig configFile;
+        RunnableHordeSpawner(TheWalkingDeadConfig configFile) 
+        { 
+        	this.configFile = configFile; 
+        }
+        public void run() {
+        	randomHordeSpawn(getServer(), configFile.getHordeSize(), configFile.getSpawnChance());
+        }
+    }
+	
+	public static void randomHordeSpawn(Server server, int maxHordeSize, int spawnChance)
+	{
+		Random rand = new Random();		
+
+		System.out.println("TWD Spawn Chance: " + spawnChance + "%");
+
+		int rollSpawn = rand.nextInt(100) + 1;
+
+		System.out.printf("SpawnChance: %s, Rolled: %s\n", spawnChance, rollSpawn);
+
+		if(rollSpawn <= spawnChance)
+		{
+			List<Player> players = Arrays.asList(server.getOnlinePlayers());
+			if(players.size() > 0)
+			{
+				Collections.shuffle(players);
+
+				Player target = players.get(0);
+
+				System.out.println("Our victim: " + target.getName());
+
+				target.sendMessage("Something putrid assails your nostrils...");
+				
+				spawnHorde(server, target.getLocation(), maxHordeSize);
+			}
+
+		}
+	}
+	
+	public static void spawnHorde(Server server, Location location, int hordeSize)
+	{
+		World world = server.getWorld("world");
+		
+		for(int i = 0; i < hordeSize; i++)
+		{
+			world.spawn(getRandomNearbyLocation(location, 5, 10).toLocation(world), Zombie.class);
+		}
+	}
+	
+	public static Vector getRandomNearbyLocation(Location location, int minimumDistance, int randomDistance)
+	{
+		Vector v = location.toVector();
+
+		v.setX(v.getX() + (Math.random()*randomDistance) + minimumDistance);
+		v.setY(v.getY() + (Math.random()*randomDistance) + minimumDistance);
+		v.setZ(v.getZ() + (Math.random()*randomDistance) + minimumDistance);
+		
+		return v;
 	}
 }

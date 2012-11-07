@@ -12,13 +12,12 @@ import org.bukkit.util.Vector;
 
 public class TheWalkingDeadCommandExecutor implements CommandExecutor {
 	private Server server;
-	
-	private int maxHordeSize = 5;
+	private TheWalkingDeadConfig config;
 
-	public TheWalkingDeadCommandExecutor(int maxHordeSize, Server server)
+	public TheWalkingDeadCommandExecutor(Server server, TheWalkingDeadConfig config)
 	{
-		this.maxHordeSize = maxHordeSize;
 		this.server = server;
+		this.config = config;
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) 
@@ -38,7 +37,7 @@ public class TheWalkingDeadCommandExecutor implements CommandExecutor {
 			if ((sender instanceof Player)) {
 				// spawn a horde at current location
 				Player player = (Player) sender;
-				spawnHorde(player.getLocation());
+				TheWalkingDead.spawnHorde(server, player.getLocation(), config.getHordeSize());
 				return true;
 			} else {
 				sender.sendMessage("This command can only be run by a player.");
@@ -50,7 +49,7 @@ public class TheWalkingDeadCommandExecutor implements CommandExecutor {
 	        	sender.sendMessage(args[0] + " is not online!");
 	            return false;
 	        } else {
-	        	spawnHorde(target.getLocation());
+	        	TheWalkingDead.spawnHorde(server, target.getLocation(), config.getHordeSize());
 	        	return true;
 	        }
 		} else {
@@ -59,26 +58,8 @@ public class TheWalkingDeadCommandExecutor implements CommandExecutor {
 		}
 	}
 	
-	public void spawnHorde(Location location)
-	{
-		World world = server.getWorld("world");
-		
-		for(int i = 0; i < maxHordeSize; i++)
-		{
-			world.spawn(getRandomLocatioNearLocation(location, 5, 10).toLocation(world), Zombie.class);
-		}
-	}
+
 
 	
-	public Vector getRandomLocatioNearLocation(Location location, int minimumDistance, int randomDistance)
-	{
-		Vector v = location.toVector();
-		
-		
-		v.setX(v.getX() + Math.random()%randomDistance + minimumDistance);
-		v.setY(v.getY() + Math.random()%randomDistance + minimumDistance);
-		v.setZ(v.getZ() + Math.random()%randomDistance + minimumDistance);
-		
-		return v;
-	}
+	
 }
