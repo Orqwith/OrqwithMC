@@ -1,0 +1,5 @@
+name: ChestSorter
+version: 0.1
+description: It sorts the stuff in your chests!
+author: JavaWarlord
+main: com.orqwith.mc.ChestSorter
