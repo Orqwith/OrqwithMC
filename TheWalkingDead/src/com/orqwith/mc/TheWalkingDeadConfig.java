@@ -15,7 +15,7 @@ public class TheWalkingDeadConfig {
 		this.spawnChance = plugin.getConfig().getInt("zombies.spawnChance");
 		this.blockBreakSpawnInterval = plugin.getConfig().getInt("zombies.blockBreakSpawnInterval");
 		this.immuneToDaylight = plugin.getConfig().getBoolean("zombies.immuneToDaylight");
-		this.spawnInterval = plugin.getConfig().getInt("zombies.spawnInterval");
+		this.spawnInterval = plugin.getConfig().getInt("zombies.spawnInterval") * 20;
 	}
 	
 	public boolean isImmuneToDaylight() {
