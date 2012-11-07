@@ -7,6 +7,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+/**
+* This comment is better
+*/
 public class SpawnHordeListener implements Listener {
 
 	TheWalkingDead plugin;
