@@ -7,16 +7,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.orqwith.mc.TheWalkingDead;
-import com.orqwith.mc.TheWalkingDeadConfig;
 
 public class TheWalkingDeadCommandExecutor implements CommandExecutor {
 	private Server server;
-	private TheWalkingDeadConfig config;
 
-	public TheWalkingDeadCommandExecutor(Server server, TheWalkingDeadConfig config)
+	public TheWalkingDeadCommandExecutor(Server server)
 	{
 		this.server = server;
-		this.config = config;
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) 
