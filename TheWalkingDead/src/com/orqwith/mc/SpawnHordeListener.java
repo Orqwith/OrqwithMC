@@ -10,10 +10,12 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 public class SpawnHordeListener implements Listener {
 
 	TheWalkingDead plugin;
+	private HordeSpawner hordeSpawner;
 	static int blocksBroken = 0;
 
-	public SpawnHordeListener(TheWalkingDead plugin) {
+	public SpawnHordeListener(TheWalkingDead plugin, HordeSpawner hordeSpawner) {
 		this.plugin = plugin;
+		this.hordeSpawner = hordeSpawner;
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
@@ -23,8 +25,7 @@ public class SpawnHordeListener implements Listener {
 				.format("%s has died. A horde of zombies has been attracted to their corpse...",
 						player.getName());
 		event.setDeathMessage(deathMessage);
-		TheWalkingDead.spawnHorde(plugin.getServer(), player.getLocation(),
-				plugin.config.getHordeSize());
+		hordeSpawner.spawnNearPlayer(player);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -35,8 +36,8 @@ public class SpawnHordeListener implements Listener {
 		if (blocksBroken % blockBreakSpawnInterval == 0) {
 			int hordeSize = plugin.config.getHordeSize();
 			int spawnChance = plugin.config.getSpawnChance();
-			TheWalkingDead.randomHordeSpawn(plugin.getServer(), hordeSize,
-					spawnChance);
+			if (hordeSpawner.rollToSpawn())
+				hordeSpawner.spawnNearPlayer(hordeSpawner.getTargetPlayer());
 		}
 	}
 

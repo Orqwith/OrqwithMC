@@ -17,6 +17,7 @@ import org.bukkit.util.Vector;
 public final class TheWalkingDead extends JavaPlugin {
 
 	public TheWalkingDeadConfig config;
+	private HordeSpawner hordeSpawner;
 
 	@Override
 	public void onEnable() {
@@ -25,11 +26,13 @@ public final class TheWalkingDead extends JavaPlugin {
 		getConfig().options().copyDefaults(true);
 		saveConfig();
 		config = new TheWalkingDeadConfig(this);
+		this.hordeSpawner = new HordeSpawner(getServer(), config);
 
 		getCommand("twd.spawnHorde").setExecutor(
-				new TheWalkingDeadCommandExecutor(getServer(), config));
+				new TheWalkingDeadCommandExecutor(getServer(), config,
+						hordeSpawner));
 		getServer().getPluginManager().registerEvents(
-				new SpawnHordeListener(this), this);
+				new SpawnHordeListener(this, hordeSpawner), this);
 		getServer().getPluginManager().registerEvents(new ZombieListener(this),
 				this);
 
@@ -46,61 +49,60 @@ public final class TheWalkingDead extends JavaPlugin {
 	 */
 	public void scheduleZombieHorde(TheWalkingDeadConfig configFile) {
 		int taskID = getServer().getScheduler().scheduleSyncRepeatingTask(this,
-				new RunnableHordeSpawner(configFile), 60L,
-				configFile.getSpawnInterval());
+				hordeSpawner, 60L, configFile.getSpawnInterval());
 		getLogger().info(
 				"Scheduling random zombie horde spawner as taskID: " + taskID);
 	}
 
-	class RunnableHordeSpawner implements Runnable {
-		TheWalkingDeadConfig configFile;
+	// class RunnableHordeSpawner implements Runnable {
+	// TheWalkingDeadConfig configFile;
+	//
+	// /**
+	// * Constructor
+	// *
+	// * @param configFile
+	// *
+	// RunnableHordeSpawner(TheWalkingDeadConfig configFile) {
+	// this.configFile = configFile;
+	// }
+	//
+	// public void run() {
+	// randomHordeSpawn(getServer(), configFile.getHordeSize(),
+	// configFile.getSpawnChance());
+	// }
+	// }
 
-		/**
-		 * Constructor
-		 * 
-		 * @param configFile
-		 */
-		RunnableHordeSpawner(TheWalkingDeadConfig configFile) {
-			this.configFile = configFile;
-		}
+	// public static void randomHordeSpawn(Server server, int maxHordeSize,
+	// int spawnChance) {
+	// Random rand = new Random();
+	//
+	// server.getLogger().info("TWD Spawn Chance: " + spawnChance + "%");
+	//
+	// int rollSpawn = rand.nextInt(100) + 1;
+	//
+	// server.getLogger().info(
+	// String.format("SpawnChance: %s, Rolled: %s\n", spawnChance,
+	// rollSpawn));
+	//
+	// if (rollSpawn <= spawnChance) {
+	// List<Player> players = Arrays.asList(server.getOnlinePlayers());
+	// if (players.size() > 0) {
+	// Collections.shuffle(players);
+	// Player target = players.get(0);
+	// server.getLogger().info("Our victim: " + target.getName());
+	// target.sendMessage("Something putrid assails your nostrils...");
+	// spawnHorde(server, target.getLocation(), maxHordeSize);
+	// }
+	// }
+	// }
 
-		public void run() {
-			randomHordeSpawn(getServer(), configFile.getHordeSize(),
-					configFile.getSpawnChance());
-		}
-	}
-
-	public static void randomHordeSpawn(Server server, int maxHordeSize,
-			int spawnChance) {
-		Random rand = new Random();
-
-		server.getLogger().info("TWD Spawn Chance: " + spawnChance + "%");
-
-		int rollSpawn = rand.nextInt(100) + 1;
-
-		server.getLogger().info(
-				String.format("SpawnChance: %s, Rolled: %s\n", spawnChance,
-						rollSpawn));
-
-		if (rollSpawn <= spawnChance) {
-			List<Player> players = Arrays.asList(server.getOnlinePlayers());
-			if (players.size() > 0) {
-				Collections.shuffle(players);
-				Player target = players.get(0);
-				server.getLogger().info("Our victim: " + target.getName());
-				target.sendMessage("Something putrid assails your nostrils...");
-				spawnHorde(server, target.getLocation(), maxHordeSize);
-			}
-		}
-	}
-
-	public static void spawnHorde(Server server, Location location,
-			int hordeSize) {
-		World world = server.getWorld("world");
-
-		for (int i = 0; i < hordeSize; i++) {
-			world.spawn(Utilities.getRandomNearbyLocation(location, 5, 10)
-					.toLocation(world), Zombie.class);
-		}
-	}
+	// public static void spawnHorde(Server server, Location location,
+	// int hordeSize) {
+	// World world = server.getWorld("world");
+	//
+	// for (int i = 0; i < hordeSize; i++) {
+	// world.spawn(Utilities.getRandomNearbyLocation(location, 5, 10)
+	// .toLocation(world), Zombie.class);
+	// }
+	// }
 }
