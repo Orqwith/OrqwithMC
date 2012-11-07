@@ -12,32 +12,32 @@ public class SpawnHordeListener implements Listener {
 	TheWalkingDead plugin;
 	static int blocksBroken = 0;
 
-	public SpawnHordeListener(TheWalkingDead plugin)
-	{
+	public SpawnHordeListener(TheWalkingDead plugin) {
 		this.plugin = plugin;
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
-	public void onPlayDeath(PlayerDeathEvent event)
-	{
+	public void onPlayDeath(PlayerDeathEvent event) {
 		Player player = event.getEntity();
-		String deathMessage = String.format("%s has died. A horde of zombies has been attracted to their corpse...", player.getName());
+		String deathMessage = String
+				.format("%s has died. A horde of zombies has been attracted to their corpse...",
+						player.getName());
 		event.setDeathMessage(deathMessage);
-		TheWalkingDead.spawnHorde(plugin.getServer(), player.getLocation(), plugin.config.getHordeSize());
+		TheWalkingDead.spawnHorde(plugin.getServer(), player.getLocation(),
+				plugin.config.getHordeSize());
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onBlockBreakEvent(BlockBreakEvent event)
-	{
-		int blockBreakSpawnInterval = plugin.config.getBlockBreakSpawnInterval();
+	public void onBlockBreakEvent(BlockBreakEvent event) {
+		int blockBreakSpawnInterval = plugin.config
+				.getBlockBreakSpawnInterval();
 		blocksBroken++;
-		if(blocksBroken%blockBreakSpawnInterval == 0)
-		{
+		if (blocksBroken % blockBreakSpawnInterval == 0) {
 			int hordeSize = plugin.config.getHordeSize();
 			int spawnChance = plugin.config.getSpawnChance();
-			TheWalkingDead.randomHordeSpawn(plugin.getServer(), hordeSize, spawnChance);
+			TheWalkingDead.randomHordeSpawn(plugin.getServer(), hordeSize,
+					spawnChance);
 		}
 	}
-
 
 }
