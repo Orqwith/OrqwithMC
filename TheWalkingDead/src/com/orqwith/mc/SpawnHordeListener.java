@@ -7,19 +7,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-/**
-* This comment is better
-*/
 public class SpawnHordeListener implements Listener {
 
 	TheWalkingDead plugin;
 	static int blocksBroken = 0;
 
-	/**
-	 * Constructor
-	 * 
-	 * @param plugin
-	 */
 	public SpawnHordeListener(TheWalkingDead plugin) {
 		this.plugin = plugin;
 	}
