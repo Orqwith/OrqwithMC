@@ -1,21 +1,24 @@
 package com.orqwith.mc;
 
+import org.bukkit.Location;
+import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
+import org.bukkit.util.Vector;
 
 public class TheWalkingDeadCommandExecutor implements CommandExecutor {
-	private TheWalkingDead plugin;
+	private Server server;
 	
 	private int maxHordeSize = 5;
 
-	public TheWalkingDeadCommandExecutor(TheWalkingDead plugin)
+	public TheWalkingDeadCommandExecutor(int maxHordeSize, Server server)
 	{
-		this.plugin = plugin;
-		maxHordeSize = plugin.getConfig().getInt("parameters.maxHordeSize");
+		this.maxHordeSize = maxHordeSize;
+		this.server = server;
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) 
@@ -29,25 +32,25 @@ public class TheWalkingDeadCommandExecutor implements CommandExecutor {
 	}
 	
 	public boolean spawnHordeCommand(CommandSender sender, Command cmd, String label, String[] args)
-	{
+	{		
 		if(args.length == 0)
 		{
 			if ((sender instanceof Player)) {
 				// spawn a horde at current location
 				Player player = (Player) sender;
-				spawnHorde(player);
+				spawnHorde(player.getLocation());
 				return true;
 			} else {
 				sender.sendMessage("This command can only be run by a player.");
 				return false;
 			}
 		} else if (args.length == 1) {
-			Player target = (plugin.getServer().getPlayer(args[0]));
+			Player target = (server.getPlayer(args[0]));
 	        if (target == null) {
 	        	sender.sendMessage(args[0] + " is not online!");
 	            return false;
 	        } else {
-	        	spawnHorde(target);
+	        	spawnHorde(target.getLocation());
 	        	return true;
 	        }
 		} else {
@@ -56,12 +59,26 @@ public class TheWalkingDeadCommandExecutor implements CommandExecutor {
 		}
 	}
 	
-	public void spawnHorde(Player target)
+	public void spawnHorde(Location location)
 	{
-		World world = plugin.getServer().getWorld("world");
+		World world = server.getWorld("world");
 		
 		for(int i = 0; i < maxHordeSize; i++)
-			world.spawn(target.getLocation(), Zombie.class);
+		{
+			world.spawn(getRandomLocatioNearLocation(location, 5, 10).toLocation(world), Zombie.class);
+		}
 	}
 
+	
+	public Vector getRandomLocatioNearLocation(Location location, int minimumDistance, int randomDistance)
+	{
+		Vector v = location.toVector();
+		
+		
+		v.setX(v.getX() + Math.random()%randomDistance + minimumDistance);
+		v.setY(v.getY() + Math.random()%randomDistance + minimumDistance);
+		v.setZ(v.getZ() + Math.random()%randomDistance + minimumDistance);
+		
+		return v;
+	}
 }

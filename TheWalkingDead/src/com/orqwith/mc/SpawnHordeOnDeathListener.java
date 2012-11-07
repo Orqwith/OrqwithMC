@@ -21,6 +21,6 @@ public class SpawnHordeOnDeathListener implements Listener {
 		Player player = event.getEntity();
 		String deathMessage = String.format("%s has died. A horde of zombies has been attracted to their corpse...", player.getName());
 		event.setDeathMessage(deathMessage);
-		new TheWalkingDeadCommandExecutor(plugin).spawnHorde(player);
+		new TheWalkingDeadCommandExecutor(plugin.getMaxHordeSize(), plugin.getServer()).spawnHorde(player.getLocation());
 	}
 }
