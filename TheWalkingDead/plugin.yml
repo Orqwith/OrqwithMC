@@ -1,6 +1,6 @@
 name: TheWalkingDead
 main: com.orqwith.mc.TheWalkingDead
-version: 0.1
+version: 0.5
 commands:
   twd.spawnHorde:
     description: Spawns a horde of zombies, either at the corrent location or at the target indicated.
