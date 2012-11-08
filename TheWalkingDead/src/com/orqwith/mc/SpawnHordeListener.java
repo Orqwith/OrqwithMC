@@ -34,7 +34,7 @@ public class SpawnHordeListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreakEvent(BlockBreakEvent event) {
-		int blockBreakSpawnInterval = plugin.config
+		int blockBreakSpawnInterval = TheWalkingDead.config
 				.getBlockBreakSpawnInterval();
 		blocksBroken++;
 		if (blocksBroken % blockBreakSpawnInterval == 0) {

@@ -40,9 +40,6 @@ public class ZombieListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onCreatureSpawn(CreatureSpawnEvent event) {
-		//for debug
-		plugin.getServer().getLogger().info("In onCreatureSpawn");
-
 		// disable anything that's not a zombie. Note that this includes
 		// non-monsters as well (chickens, villagers, ocelots, etc)
 		if (event.getEntityType() != EntityType.ZOMBIE)
@@ -51,8 +48,6 @@ public class ZombieListener implements Listener {
 
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onEntityDeadh(EntityDeathEvent event) {
-		//for debug
-		plugin.getServer().getLogger().info("In onEntityDeadh");
 		TheWalkingDeadZombie zombie = ZombieManager
 				.getZombie(event.getEntity());
 
@@ -62,8 +57,6 @@ public class ZombieListener implements Listener {
 
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onEntityDamage(EntityDamageEvent event) {
-		//for debug
-		plugin.getServer().getLogger().info("In onEntityDamage");
 		// Check to make sure this is some hawt entity on entity hard-core
 		// action
 		if (event instanceof EntityDamageByEntityEvent) {
@@ -94,8 +87,6 @@ public class ZombieListener implements Listener {
 	public void doOtherOnZombieAttack(EntityDamageEvent event) {
 		Entity assailant = ((EntityDamageByEntityEvent) event).getDamager();
 		Entity victim = event.getEntity();
-		//for debug
-		plugin.getServer().getLogger().info("In doOtherOnZombieAttack");
 
 		LivingEntity zombieVictim = ZombieManager.getZombie(victim)
 				.getLivingEntity();
@@ -160,10 +151,7 @@ public class ZombieListener implements Listener {
 		}
 	}
 
-	public void doZombieOnOtherAttack(EntityDamageEvent event) {
-		//for debug
-		plugin.getServer().getLogger().info("In doZombieOnOtherAttack");
-		
+	public void doZombieOnOtherAttack(EntityDamageEvent event) {		
 		Entity victim = event.getEntity();
 
 		// make sure our zombie is slapping something that's alive and not
