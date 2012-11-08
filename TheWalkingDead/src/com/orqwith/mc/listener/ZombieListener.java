@@ -169,9 +169,7 @@ public class ZombieListener implements Listener {
 		// make sure our zombie is slapping something that's alive and not
 		// like...a tree
 		if (victim instanceof LivingEntity) {
-			LivingEntity livingVictim = (LivingEntity) victim; // Living...for
-																// now!
-																// mwahaha...
+			LivingEntity livingVictim = (LivingEntity) victim; // Living...for now! mwahaha...
 
 			// Do player specific things, like send them a message, or infect
 			// them, or give them a cheeseburger
