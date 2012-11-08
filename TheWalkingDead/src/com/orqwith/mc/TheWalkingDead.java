@@ -1,11 +1,18 @@
 package com.orqwith.mc;
 
 import java.io.File;
+
+import org.bukkit.Location;
+import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.orqwith.mc.commandexecutor.TheWalkingDeadCommandExecutor;
+import com.orqwith.mc.listener.SpawnHordeListener;
+import com.orqwith.mc.listener.ZombieListener;
 
 public final class TheWalkingDead extends JavaPlugin {
 
-	public TheWalkingDeadConfig config;
+	public static TheWalkingDeadConfig config;
 	private HordeSpawner hordeSpawner;
 
 	@Override

@@ -7,6 +7,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import com.orqwith.mc.HordeSpawner;
+import com.orqwith.mc.TheWalkingDead;
+import com.orqwith.mc.Utilities;
+
 public class SpawnHordeListener implements Listener {
 
 	TheWalkingDead plugin;

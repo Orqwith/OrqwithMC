@@ -1,10 +1,12 @@
-package com.orqwith.mc;
+package com.orqwith.mc.commandexecutor;
 
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import com.orqwith.mc.HordeSpawner;
 
 public class TheWalkingDeadCommandExecutor implements CommandExecutor {
 	private Server server;
