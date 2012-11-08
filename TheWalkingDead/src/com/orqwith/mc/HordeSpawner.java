@@ -5,8 +5,12 @@ import java.util.Random;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.World;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
+
+import com.orqwith.mc.entity.TheWalkingDeadZombie;
+import com.orqwith.mc.entity.manager.ZombieManager;
 
 /**
  * This class is an invisible, omnipresent Zombie spawner
@@ -24,6 +28,7 @@ public class HordeSpawner implements Runnable {
 	private int maxHordeSize;
 	private int minimumDistance;
 	private int randomDistance;
+	private TheWalkingDeadConfig config;
 
 	/**
 	 * Constructor
@@ -34,6 +39,7 @@ public class HordeSpawner implements Runnable {
 		this.server = server;
 		/* placeholder in case we want to implement for worlds not named "world" */
 		this.world = server.getWorld("world");
+		this.config = config;
 		this.chanceOfSpawn = config.getSpawnChance();
 		this.maxHordeSize = config.getHordeSize();
 		this.minimumDistance = MINIMUM_DISTANCE;
@@ -141,7 +147,13 @@ public class HordeSpawner implements Runnable {
 	 */
 	private void spawn(Location location, int hordeSize) {
 		for (int i = 0; i < hordeSize; i++) {
-			world.spawn(location, Zombie.class);
+			// world.spawn(location, Zombie.class);
+			LivingEntity spawnedZombie = world.spawn(
+					Utilities.getRandomNearbyLocation(location, 5, 10)
+							.toLocation(world), Zombie.class);
+			TheWalkingDeadZombie zombie = new TheWalkingDeadZombie(
+					spawnedZombie, config);
+			ZombieManager.addZombie(zombie);
 		}
 	}
 }

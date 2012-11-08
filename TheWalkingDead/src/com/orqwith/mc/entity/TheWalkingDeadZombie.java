@@ -11,20 +11,21 @@ import com.orqwith.mc.TheWalkingDeadConfig;
 public class TheWalkingDeadZombie {
 	private int health;
 	private LivingEntity livingEntity;
-	
-	public TheWalkingDeadZombie(LivingEntity livingEntity, TheWalkingDeadConfig config) {
+
+	public TheWalkingDeadZombie(LivingEntity livingEntity,
+			TheWalkingDeadConfig config) {
 		this.setLivingEntity(livingEntity);
 		health = config.getZombieHealth();
 	}
-	
+
 	public int getHealth() {
 		return health;
 	}
-	
+
 	public void setHealth(int health) {
 		this.health = health;
 	}
-		
+
 	public void OnDeath(EntityDeathEvent event) {
 		// Zombies should drop no items nor experience.
 		List<ItemStack> originalDrops = event.getDrops();

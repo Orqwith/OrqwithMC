@@ -2,8 +2,6 @@ package com.orqwith.mc;
 
 import java.io.File;
 
-import org.bukkit.Location;
-import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.orqwith.mc.commandexecutor.TheWalkingDeadCommandExecutor;
