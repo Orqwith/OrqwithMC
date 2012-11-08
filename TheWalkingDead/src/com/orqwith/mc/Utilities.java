@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 public class Utilities {
+	@Deprecated
 	public static Vector getRandomNearbyLocation(Location location,
 			int minimumDistance, int randomDistance) {
 		Vector v = location.toVector();
@@ -17,6 +18,20 @@ public class Utilities {
 		v.setX(v.getX() + (Math.random() * randomDistance) + minimumDistance);
 		v.setY(v.getY() + (Math.random() * randomDistance) + minimumDistance);
 		v.setZ(v.getZ() + (Math.random() * randomDistance) + minimumDistance);
+
+		return v;
+	}
+
+	public static Vector getRandomLocation(Location location,
+			int minimumDistance, int maximumDistance) {
+		Vector v = location.toVector();
+
+		v.setX(v.getX() + (Math.random() * (maximumDistance - minimumDistance))
+				+ minimumDistance);
+		v.setY(v.getY() + (Math.random() * (maximumDistance - minimumDistance))
+				+ minimumDistance);
+		v.setZ(v.getZ() + (Math.random() * (maximumDistance - minimumDistance))
+				+ minimumDistance);
 
 		return v;
 	}

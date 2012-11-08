@@ -9,6 +9,8 @@ public class TheWalkingDeadConfig {
 	private int blockBreakSpawnInterval = 15;
 	private int spawnInterval = 0;
 	private int maximumHealth = 20;
+	private int spawnMinimumDistance;
+	private int spawnMaximumDistance;
 
 	TheWalkingDeadConfig(JavaPlugin plugin) {
 		this.hordeSize = plugin.getConfig().getInt("zombies.hordeSize");
@@ -18,7 +20,10 @@ public class TheWalkingDeadConfig {
 		this.immuneToDaylight = plugin.getConfig().getBoolean(
 				"zombies.immuneToDaylight");
 		this.spawnInterval = plugin.getConfig().getInt("zombies.spawnInterval") * 20;
-		this.maximumHealth = plugin.getConfig().getInt("zombies.maximumHealth");
+		this.setSpawnMinimumDistance(plugin.getConfig().getInt(
+				"zombies.spawnMinimumDistance"));
+		this.setSpawnMaximumDistance(plugin.getConfig().getInt(
+				"zombies.spawnMaximumDistance"));
 	}
 
 	public boolean isImmuneToDaylight() {
@@ -67,5 +72,21 @@ public class TheWalkingDeadConfig {
 
 	public void setMaximumHealth(int maximumHealth) {
 		this.maximumHealth = maximumHealth;
+	}
+
+	public int getSpawnMinimumDistance() {
+		return spawnMinimumDistance;
+	}
+
+	public void setSpawnMinimumDistance(int spawnMinimumDistance) {
+		this.spawnMinimumDistance = spawnMinimumDistance;
+	}
+
+	public int getSpawnMaximumDistance() {
+		return spawnMaximumDistance;
+	}
+
+	public void setSpawnMaximumDistance(int spawnMaximumDistance) {
+		this.spawnMaximumDistance = spawnMaximumDistance;
 	}
 }

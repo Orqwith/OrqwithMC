@@ -7,3 +7,5 @@ zombies:
   spawnInterval: 60
   blockBreakSpawnInterval: 15
   maximumHealth: 50
+  spawnMinimumDistance: 5
+  spawnMaximumDistance: 10
