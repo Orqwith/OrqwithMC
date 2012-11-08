@@ -8,7 +8,7 @@ public class TheWalkingDeadConfig {
 	int spawnChance = 50;
 	int blockBreakSpawnInterval = 15;
 	int spawnInterval = 0;
-	int zombieHealth = 20;
+	int maximumHealth = 20;
 
 	TheWalkingDeadConfig(JavaPlugin plugin) {
 		this.hordeSize = plugin.getConfig().getInt("zombies.hordeSize");
@@ -18,7 +18,7 @@ public class TheWalkingDeadConfig {
 		this.immuneToDaylight = plugin.getConfig().getBoolean(
 				"zombies.immuneToDaylight");
 		this.spawnInterval = plugin.getConfig().getInt("zombies.spawnInterval") * 20;
-		this.zombieHealth = plugin.getConfig().getInt("zombies.health");
+		this.maximumHealth = plugin.getConfig().getInt("zombies.maximumHealth");
 	}
 
 	public boolean isImmuneToDaylight() {
@@ -61,11 +61,11 @@ public class TheWalkingDeadConfig {
 		this.spawnInterval = spawnInterval;
 	}
 
-	public int getZombieHealth() {
-		return zombieHealth;
+	public int getMaximumHealth() {
+		return maximumHealth;
 	}
 
-	public void setZombieHealth(int zombieHealth) {
-		this.zombieHealth = zombieHealth;
+	public void setMaximumHealth(int maximumHealth) {
+		this.maximumHealth = maximumHealth;
 	}
 }

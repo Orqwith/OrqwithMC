@@ -3,7 +3,6 @@ package com.orqwith.mc.entity;
 import java.util.List;
 
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Zombie;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -16,7 +15,7 @@ public class TheWalkingDeadZombie {
 	public TheWalkingDeadZombie(LivingEntity livingEntity,
 			TheWalkingDeadConfig config) {
 		this.setLivingEntity(livingEntity);
-		health = config.getZombieHealth();
+		health = config.getMaximumHealth();
 	}
 
 	public int getHealth() {
