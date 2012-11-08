@@ -22,7 +22,6 @@ public class SpawnHordeListener implements Listener {
 		this.hordeSpawner = hordeSpawner;
 	}
 
-
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayDeath(PlayerDeathEvent event) {
 		Player player = event.getEntity();
@@ -35,7 +34,7 @@ public class SpawnHordeListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreakEvent(BlockBreakEvent event) {
-		int blockBreakSpawnInterval = TheWalkingDead.config
+		int blockBreakSpawnInterval = plugin.getTwdConfig()
 				.getBlockBreakSpawnInterval();
 		blocksBroken++;
 		if (blocksBroken % blockBreakSpawnInterval == 0) {

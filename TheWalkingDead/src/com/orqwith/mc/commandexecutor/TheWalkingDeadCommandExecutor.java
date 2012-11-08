@@ -7,14 +7,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.orqwith.mc.HordeSpawner;
+import com.orqwith.mc.TheWalkingDead;
 
 public class TheWalkingDeadCommandExecutor implements CommandExecutor {
 	private Server server;
 	private HordeSpawner hordeSpawner;
 
-	public TheWalkingDeadCommandExecutor(Server server,
+	public TheWalkingDeadCommandExecutor(TheWalkingDead plugin,
 			HordeSpawner hordeSpawner) {
-		this.server = server;
+		this.server = plugin.getServer();
 		this.hordeSpawner = hordeSpawner;
 	}
 

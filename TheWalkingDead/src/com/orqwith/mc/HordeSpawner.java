@@ -8,6 +8,8 @@ import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import com.orqwith.mc.entity.TheWalkingDeadZombie;
 import com.orqwith.mc.entity.manager.ZombieManager;
@@ -40,6 +42,17 @@ public class HordeSpawner implements Runnable {
 		/* placeholder in case we want to implement for worlds not named "world" */
 		this.world = server.getWorld("world");
 		this.config = config;
+		this.chanceOfSpawn = config.getSpawnChance();
+		this.maxHordeSize = config.getHordeSize();
+		this.minimumDistance = MINIMUM_DISTANCE;
+		this.randomDistance = RANDOM_DISTANCE;
+	}
+
+	public HordeSpawner(TheWalkingDead plugin) {
+		// TODO Auto-generated constructor stub
+		this.server = plugin.getServer();
+		this.world = server.getWorld("world");
+		this.config = plugin.getTwdConfig();
 		this.chanceOfSpawn = config.getSpawnChance();
 		this.maxHordeSize = config.getHordeSize();
 		this.minimumDistance = MINIMUM_DISTANCE;

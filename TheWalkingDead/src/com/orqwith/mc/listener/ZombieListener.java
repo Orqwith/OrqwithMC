@@ -25,9 +25,9 @@ public class ZombieListener implements Listener {
 	TheWalkingDead plugin;
 	private TheWalkingDeadConfig config;
 
-	public ZombieListener(TheWalkingDead plugin, TheWalkingDeadConfig config) {
+	public ZombieListener(TheWalkingDead plugin) {
 		this.plugin = plugin;
-		this.config = config;
+		this.config = plugin.getTwdConfig();
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -187,6 +187,7 @@ public class ZombieListener implements Listener {
 	}
 
 	public void doZombieOnOtherAttack(EntityDamageEvent event) {
+
 		Entity victim = event.getEntity();
 
 		// make sure our zombie is slapping something that's alive and not

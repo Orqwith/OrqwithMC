@@ -10,7 +10,7 @@ import com.orqwith.mc.listener.ZombieListener;
 
 public final class TheWalkingDead extends JavaPlugin {
 
-	public static TheWalkingDeadConfig config;
+	private TheWalkingDeadConfig twdConfig;
 	private HordeSpawner hordeSpawner;
 
 	@Override
@@ -19,17 +19,17 @@ public final class TheWalkingDead extends JavaPlugin {
 		new File(this.getDataFolder().getAbsolutePath()).mkdirs();
 		getConfig().options().copyDefaults(true);
 		saveConfig();
-		config = new TheWalkingDeadConfig(this);
-		this.hordeSpawner = new HordeSpawner(getServer(), config);
+		twdConfig = new TheWalkingDeadConfig(this);
+		this.hordeSpawner = new HordeSpawner(this);
 
 		getCommand("twd.spawnHorde").setExecutor(
-				new TheWalkingDeadCommandExecutor(getServer(), hordeSpawner));
+				new TheWalkingDeadCommandExecutor(this, hordeSpawner));
 		getServer().getPluginManager().registerEvents(
 				new SpawnHordeListener(this, hordeSpawner), this);
-		getServer().getPluginManager().registerEvents(
-				new ZombieListener(this, config), this);
+		getServer().getPluginManager().registerEvents(new ZombieListener(this),
+				this);
 
-		scheduleZombieHorde(config);
+		scheduleZombieHorde(twdConfig);
 	}
 
 	@Override
@@ -45,5 +45,13 @@ public final class TheWalkingDead extends JavaPlugin {
 				hordeSpawner, 60L, configFile.getSpawnInterval());
 		getLogger().info(
 				"Scheduling random zombie horde spawner as taskID: " + taskID);
+	}
+
+	public TheWalkingDeadConfig getTwdConfig() {
+		return twdConfig;
+	}
+
+	public void setTwdConfig(TheWalkingDeadConfig twdConfig) {
+		this.twdConfig = twdConfig;
 	}
 }
