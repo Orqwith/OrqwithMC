@@ -41,5 +41,4 @@ public class ZombieManager {
 	public static void removeZombie(TheWalkingDeadZombie zombie) {
 		zombies.remove(zombie);
 	}
-
 }

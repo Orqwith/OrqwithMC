@@ -147,7 +147,6 @@ public class HordeSpawner implements Runnable {
 	 */
 	private void spawn(Location location, int hordeSize) {
 		for (int i = 0; i < hordeSize; i++) {
-			// world.spawn(location, Zombie.class);
 			LivingEntity spawnedZombie = world.spawn(
 					Utilities.getRandomNearbyLocation(location, 5, 10)
 							.toLocation(world), Zombie.class);

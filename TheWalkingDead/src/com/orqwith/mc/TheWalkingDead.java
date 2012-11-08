@@ -26,8 +26,8 @@ public final class TheWalkingDead extends JavaPlugin {
 				new TheWalkingDeadCommandExecutor(getServer(), hordeSpawner));
 		getServer().getPluginManager().registerEvents(
 				new SpawnHordeListener(this, hordeSpawner), this);
-		getServer().getPluginManager().registerEvents(new ZombieListener(this),
-				this);
+		getServer().getPluginManager().registerEvents(
+				new ZombieListener(this, config), this);
 
 		scheduleZombieHorde(config);
 	}

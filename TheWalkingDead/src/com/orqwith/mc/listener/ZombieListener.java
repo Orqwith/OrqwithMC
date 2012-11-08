@@ -6,6 +6,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -16,15 +17,19 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 import com.orqwith.mc.TheWalkingDead;
+import com.orqwith.mc.TheWalkingDeadConfig;
+import com.orqwith.mc.Utilities;
 import com.orqwith.mc.entity.TheWalkingDeadZombie;
 import com.orqwith.mc.entity.manager.ZombieManager;
 
 public class ZombieListener implements Listener {
 
 	TheWalkingDead plugin;
+	private TheWalkingDeadConfig config;
 
-	public ZombieListener(TheWalkingDead plugin) {
+	public ZombieListener(TheWalkingDead plugin, TheWalkingDeadConfig config) {
 		this.plugin = plugin;
+		this.config = config;
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -38,12 +43,23 @@ public class ZombieListener implements Listener {
 		}
 	}
 
+	/**
+	 * Make sure the only creatures allowed to spawn are the ones we want to
+	 * 
+	 * @param event
+	 */
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onCreatureSpawn(CreatureSpawnEvent event) {
 		// disable anything that's not a zombie. Note that this includes
 		// non-monsters as well (chickens, villagers, ocelots, etc)
+		// if (ZombieManager.getZombie(event.getEntity()) == null)
 		if (event.getEntityType() != EntityType.ZOMBIE)
 			event.setCancelled(true);
+		else {
+			TheWalkingDeadZombie zombie = new TheWalkingDeadZombie(
+					event.getEntity(), config);
+			ZombieManager.addZombie(zombie);
+		}
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
@@ -151,13 +167,15 @@ public class ZombieListener implements Listener {
 		}
 	}
 
-	public void doZombieOnOtherAttack(EntityDamageEvent event) {		
+	public void doZombieOnOtherAttack(EntityDamageEvent event) {
 		Entity victim = event.getEntity();
 
 		// make sure our zombie is slapping something that's alive and not
 		// like...a tree
 		if (victim instanceof LivingEntity) {
-			LivingEntity livingVictim = (LivingEntity) victim; // Living...for now! mwahaha...
+			LivingEntity livingVictim = (LivingEntity) victim; // Living...for
+																// now!
+																// mwahaha...
 
 			// Do player specific things, like send them a message, or infect
 			// them, or give them a cheeseburger
