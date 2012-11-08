@@ -11,12 +11,14 @@ import com.orqwith.mc.listener.ZombieListener;
 public final class TheWalkingDead extends JavaPlugin {
 
 	public static TheWalkingDeadConfig config;
+	public static File pluginDirectory;
 	private HordeSpawner hordeSpawner;
 
 	@Override
 	public void onEnable() {
 		/* Create a folder to hold the config file */
-		new File(this.getDataFolder().getAbsolutePath()).mkdirs();
+		pluginDirectory = new File(this.getDataFolder().getAbsolutePath());
+		pluginDirectory.mkdirs();
 		getConfig().options().copyDefaults(true);
 		saveConfig();
 		config = new TheWalkingDeadConfig(this);
