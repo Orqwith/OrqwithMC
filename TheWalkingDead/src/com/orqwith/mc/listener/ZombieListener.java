@@ -6,7 +6,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -18,7 +17,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 
 import com.orqwith.mc.TheWalkingDead;
 import com.orqwith.mc.TheWalkingDeadConfig;
-import com.orqwith.mc.Utilities;
 import com.orqwith.mc.entity.TheWalkingDeadZombie;
 import com.orqwith.mc.entity.manager.ZombieManager;
 
@@ -121,27 +119,48 @@ public class ZombieListener implements Listener {
 		// damage the zombie
 		int damage = event.getDamage();
 
-		// disable some damage types. Add more as necessary. Mostly just the
-		// obvious ones for now.
+		/* Disable damage from certain sources */
 		switch (event.getCause()) {
 		case FALL:
-			event.setCancelled(true);
-			break;
 		case DROWNING:
-			event.setCancelled(true);
-			break;
 		case SUFFOCATION:
-			event.setCancelled(true);
-			break;
 		case POISON:
 			event.setCancelled(true);
-			break;
-		}
-
-		if (event.isCancelled()) // don't do the below if we cancelled this
-									// event above
-		{
 			return;
+		case BLOCK_EXPLOSION:
+			break;
+		case CONTACT:
+			break;
+		case CUSTOM:
+			break;
+		case ENTITY_ATTACK:
+			break;
+		case ENTITY_EXPLOSION:
+			break;
+		case FIRE:
+			break;
+		case FIRE_TICK:
+			break;
+		case LAVA:
+			break;
+		case LIGHTNING:
+			break;
+		case MAGIC:
+			break;
+		case MELTING:
+			break;
+		case PROJECTILE:
+			break;
+		case STARVATION:
+			break;
+		case SUICIDE:
+			break;
+		case VOID:
+			break;
+		case WITHER:
+			break;
+		default:
+			break;
 		}
 
 		TheWalkingDeadZombie zombie = ZombieManager.getZombie(zombieVictim);
