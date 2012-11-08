@@ -3,12 +3,12 @@ package com.orqwith.mc;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class TheWalkingDeadConfig {
-	boolean immuneToDaylight = false;
-	int hordeSize = 5;
-	int spawnChance = 50;
-	int blockBreakSpawnInterval = 15;
-	int spawnInterval = 0;
-	int maximumHealth = 20;
+	private boolean immuneToDaylight = false;
+	private int hordeSize = 5;
+	private int spawnChance = 50;
+	private int blockBreakSpawnInterval = 15;
+	private int spawnInterval = 0;
+	private int maximumHealth = 20;
 
 	TheWalkingDeadConfig(JavaPlugin plugin) {
 		this.hordeSize = plugin.getConfig().getInt("zombies.hordeSize");
