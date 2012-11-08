@@ -8,6 +8,9 @@ import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import com.orqwith.mc.entity.TheWalkingDeadZombie;
 import com.orqwith.mc.entity.manager.ZombieManager;
 
@@ -18,12 +21,15 @@ import com.orqwith.mc.entity.manager.ZombieManager;
  * 
  */
 public class HordeSpawner implements Runnable {
+	private static final int MINIMUM_DISTANCE = 5;
+	private static final int RANDOM_DISTANCE = 5;
+
 	private Server server;
 	private World world;
 	private int chanceOfSpawn;
 	private int maxHordeSize;
-	private int spawnMinimumDistance;
-	private int spawnMaximumDistance;
+	private int minimumDistance;
+	private int randomDistance;
 	private TheWalkingDeadConfig config;
 
 	/**
@@ -31,6 +37,17 @@ public class HordeSpawner implements Runnable {
 	 * 
 	 * @param configFile
 	 */
+	HordeSpawner(Server server, TheWalkingDeadConfig config) {
+		this.server = server;
+		/* placeholder in case we want to implement for worlds not named "world" */
+		this.world = server.getWorld("world");
+		this.config = config;
+		this.chanceOfSpawn = config.getSpawnChance();
+		this.maxHordeSize = config.getHordeSize();
+		this.minimumDistance = MINIMUM_DISTANCE;
+		this.randomDistance = RANDOM_DISTANCE;
+	}
+
 	public HordeSpawner(TheWalkingDead plugin) {
 		// TODO Auto-generated constructor stub
 		this.server = plugin.getServer();
@@ -38,8 +55,8 @@ public class HordeSpawner implements Runnable {
 		this.config = plugin.getTwdConfig();
 		this.chanceOfSpawn = config.getSpawnChance();
 		this.maxHordeSize = config.getHordeSize();
-		this.spawnMinimumDistance = config.getSpawnMinimumDistance();
-		this.spawnMaximumDistance = config.getSpawnMaximumDistance();
+		this.minimumDistance = MINIMUM_DISTANCE;
+		this.randomDistance = RANDOM_DISTANCE;
 	}
 
 	@Override
@@ -114,8 +131,8 @@ public class HordeSpawner implements Runnable {
 	public void spawnNear(Location location, int size) {
 		if (size == 0)
 			size = new Random().nextInt(maxHordeSize) + 1;
-		spawnAt(Utilities.getRandomNearbyLocation(location, spawnMinimumDistance,
-				spawnMaximumDistance).toLocation(world), size);
+		spawnAt(Utilities.getRandomNearbyLocation(location, minimumDistance,
+				randomDistance).toLocation(world), size);
 	}
 
 	/**
